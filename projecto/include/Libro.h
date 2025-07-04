@@ -28,4 +28,4 @@ public:
   static Libro *fromFileString(const string &line);
 };
 
-#endif // LIBRO_H
+#endif
