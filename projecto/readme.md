@@ -7,6 +7,11 @@ avanzando.
 
 ## Notas
 
+### uso de headers guards
+
+En nuestros archivos .h usamos header guars para evitar que se reincluyan varias veces.
+Lo caul causa errores de compilacion
+
 ### Calidad de codigo
 
 Usamos cppcheck para analisis estatico de nuestro codigo.
