@@ -1,0 +1,5 @@
+LIBRO|El Quijote|Miguel de Cervantes|9788424193096|1605|3|3|Novela|1072
+LIBRO|Cien años de soledad|Gabriel García Márquez|9788497592208|1967|2|2|Realismo mágico|471
+LIBRO|1984|George Orwell|9788499890944|1949|5|5|Distopía|326
+LIBRO|El Principito|Antoine de Saint-Exupéry|9788478887180|1943|4|4|Infantil|96
+LIBRO|To Kill a Mockingbird|Harper Lee|9780060935467|1960|3|3|Ficción|281
