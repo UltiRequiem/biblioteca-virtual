@@ -1,7 +1,5 @@
 # Mi biblioteca
 
-[![CI](https://github.com/TU-USUARIO/TU-REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/TU-USUARIO/TU-REPO/actions/workflows/ci.yml)
-
 Proyecto Final para el curso de Fundamentos de Programación con C++.
 
 ## Diagramas
