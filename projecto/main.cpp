@@ -37,8 +37,8 @@ int main()
     {
     case 1:
     {
-      string titulo, autor, isbn;
-      int anio, copias;
+      string titulo, autor, isbn, genero;
+      int anio, copias, paginas;
       cout << "Ingrese titulo: ";
       getline(cin, titulo);
       cout << "Ingrese autor: ";
@@ -50,8 +50,13 @@ int main()
       cout << "Ingrese numero de copias: ";
       cin >> copias;
       cin.ignore();
+      cout << "Ingrese género: ";
+      getline(cin, genero);
+      cout << "Ingrese número de páginas: ";
+      cin >> paginas;
+      cin.ignore();
 
-      Libro *nuevoLibro = new Libro(titulo, autor, isbn, anio, copias);
+      Libro *nuevoLibro = new Libro(titulo, autor, isbn, anio, copias, genero, paginas);
       biblioteca.agregarMaterial(nuevoLibro);
       cout << "Libro agregado exitosamente." << endl;
       break;

@@ -10,6 +10,7 @@ DATADIR = data
 SOURCES = $(wildcard $(SRCDIR)/*.cpp) main.cpp
 OBJECTS = $(SOURCES:%.cpp=$(OBJDIR)/%.o)
 HEADERS = $(wildcard $(INCDIR)/*.h)
+DEPENDS = $(OBJECTS:.o=.d)
 
 RED = \033[0;31m
 GREEN = \033[0;32m
@@ -25,9 +26,9 @@ $(TARGET): $(OBJECTS) | $(DATADIR)
 	$(CXX) $(OBJECTS) -o $@
 	@echo "$(GREEN)✓ Ejecutable '$(TARGET)' creado$(NC)"
 
-$(OBJDIR)/%.o: %.cpp $(HEADERS) | $(OBJDIR)
+$(OBJDIR)/%.o: %.cpp | $(OBJDIR)
 	@echo "$(YELLOW)Compilando $<...$(NC)"
-	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -MMD -MP -c $< -o $@
 
 $(OBJDIR):
 	@echo "$(BLUE)Creando directorio de objetos...$(NC)"
@@ -40,6 +41,9 @@ $(DATADIR):
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
 	@echo "$(GREEN)✓ Limpieza completada$(NC)"
+
+# Include dependency files
+-include $(DEPENDS)
 
 distclean: clean
 	@echo "$(RED)Limpieza completa...$(NC)"
@@ -104,6 +108,8 @@ check-style:
 
 .PHONY: all clean distclean run install-deps setup-data memcheck info help package check-style
 .DEFAULT_GOAL := all
+
+.PRECIOUS: $(OBJDIR)/%.o
 
 ifndef VERBOSE
 .SILENT:
