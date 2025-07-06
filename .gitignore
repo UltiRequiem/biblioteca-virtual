@@ -1,6 +1,6 @@
 */bin/
-projecto/obj
-projecto/biblioteca
+obj
+biblioteca
 
 cppcheck-report.xml
 cppcheck-report.txt
