@@ -1,5 +1,7 @@
 Juan Pérez|12345678|juan.perez@email.com|5|
 María García|87654321|maria.garcia@email.com|3|
-Carlos López|11223344|carlos.lopez@email.com|5|9788499890944
+Carlos López|11223344|carlos.lopez@email.com|5|9788478887122
 Ana Martínez|55667788|ana.martinez@email.com|4|
 Pedro Rodríguez|99887766|pedro.rodriguez@email.com|5|
+Eliaz|8493045|e@bc.com|5|
+Juanpepe|70539487|pepe@juan.com|5|

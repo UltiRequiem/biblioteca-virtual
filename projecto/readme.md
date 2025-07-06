@@ -2,6 +2,8 @@
 
 Proyecto Final para el curso de Fundamentos de Programación con C++.
 
+Uso del proyecto: <https://youtu.be/m3yliW7Dmco>
+
 ## Diagramas
 
 Diagramas útiles para explicar
@@ -50,8 +52,8 @@ El delegado dijo que espere a que actualice el repositorio y que me saldrían la
 instrucciones del repositorio, pero ya pasaron algunos días y todavía no sale.
 cppcheck lo podemos instalar en mac usando brew:
 
-Voy a copiar las instrucciones que enviaron al grupo y desarrollarlo aquí para ir
-avanzando.
+Voy a copiar las instrucciones que enviaron al grupo y desarrollarlo aquí para
+ir avanzando.
 
 ## Estructura del Proyecto
 
@@ -112,20 +114,25 @@ projecto/
 
 ### MaterialBibliografico (Clase Base Abstracta)
 
-Define la interfaz común para todos los tipos de materiales bibliográficos en el sistema.
+Define la interfaz común para todos los tipos de materiales bibliográficos en el
+sistema.
 
 **Características principales**:
 
-- **Clase abstracta** con métodos virtuales puros que deben ser implementados por las clases derivadas
-- Contiene atributos básicos compartidos: título, autor, ISBN, año, copias totales y disponibles
+- **Clase abstracta** con métodos virtuales puros que deben ser implementados
+  por las clases derivadas
+- Contiene atributos básicos compartidos: título, autor, ISBN, año, copias
+  totales y disponibles
 - Implementa operaciones comunes como préstamo y devolución de copias
 - Proporciona getters y setters para todos los atributos
-- Incluye operadores sobrecargados para comparación (`==`) y salida (`<<`) (Friend)
+- Incluye operadores sobrecargados para comparación (`==`) y salida (`<<`)
+  (Friend)
 - Define métodos de serialización para persistencia de datos
 
 **Métodos virtuales puros**:
 
-- `mostrarInformacion()`: Debe mostrar información específica del tipo de material
+- `mostrarInformacion()`: Debe mostrar información específica del tipo de
+  material
 - `getTipo()`: Debe retornar el tipo específico del material
 - `toFileString()`: Debe generar la representación en string para archivos
 
@@ -135,7 +142,8 @@ Implementación concreta de MaterialBibliografico específica para libros.
 
 **Características adicionales**:
 
-- Extiende la clase base agregando atributos específicos: género y número de páginas
+- Extiende la clase base agregando atributos específicos: género y número de
+  páginas
 - Implementa todos los métodos virtuales puros de la clase base
 - Proporciona validación específica para libros (formato ISBN)
 - Incluye serialización y deserialización específica para el formato de archivo
@@ -193,18 +201,24 @@ Controla las transacciones de préstamo entre usuarios y materiales.
 
 ### Biblioteca (Clase Controladora)
 
-Actúa como el controlador central que coordina todas las operaciones del sistema.
+Actúa como el controlador central que coordina todas las operaciones del
+sistema.
 
 **Responsabilidades principales**:
 
-- **Gestión de arrays dinámicos**: Maneja materiales, usuarios y préstamos usando arrays nativos de punteros
-- **Persistencia de datos**: Controla carga y guardado de información en archivos de texto
-- **Operaciones CRUD**: Proporciona funcionalidades completas de crear, leer, actualizar y eliminar
-- **Validaciones de negocio**: Implementa reglas como límites de préstamo y disponibilidad
+- **Gestión de arrays dinámicos**: Maneja materiales, usuarios y préstamos
+  usando arrays nativos de punteros
+- **Persistencia de datos**: Controla carga y guardado de información en
+  archivos de texto
+- **Operaciones CRUD**: Proporciona funcionalidades completas de crear, leer,
+  actualizar y eliminar
+- **Validaciones de negocio**: Implementa reglas como límites de préstamo y
+  disponibilidad
 
 **Gestión de memoria**:
 
-- Arrays dinámicos que se redimensionan automáticamente cuando alcanzan capacidad máxima
+- Arrays dinámicos que se redimensionan automáticamente cuando alcanzan
+  capacidad máxima
 - Control manual de memoria con constructores y destructores apropiados
 - Prevención de memory leaks mediante liberación explícita
 
@@ -233,8 +247,8 @@ Actúa como el controlador central que coordina todas las operaciones del sistem
 
 ### Uso de Header Guards
 
-En nuestros archivos .h usamos header guards para evitar que se reincluyan varias veces.
-Lo cual causa errores de compilación.
+En nuestros archivos .h usamos header guards para evitar que se reincluyan
+varias veces. Lo cual causa errores de compilación.
 
 ### Calidad de Código
 
@@ -252,5 +266,4 @@ Luego
 cppcheck .
 ```
 
-Resultado:
-![alt text](image.png)
+Resultado: ![alt text](image.png)
