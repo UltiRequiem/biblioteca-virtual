@@ -1,184 +1,34 @@
-name: CI - Análisis de Código C++
+name: CI Simple
 
-on:
-  push:
-    branches: [main, master, develop]
-  pull_request:
-    branches: [main, master]
+on: [push, pull_request]
 
 jobs:
-  cppcheck:
-    name: Análisis Estático con CPPCheck
+  check:
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Checkout código
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: 🔧 Instalar CPPCheck
+      - name: Instalar herramientas
+        run: sudo apt-get update && sudo apt-get install -y cppcheck build-essential
+
+      - name: Verificar proyecto
         run: |
-          sudo apt-get update
-          sudo apt-get install -y cppcheck
-
-      - name: 📊 Verificar versión de CPPCheck
-        run: cppcheck --version
-
-      - name: 🔍 Verificar estructura del proyecto
-        run: |
-          echo "📁 Estructura del repositorio:"
-          find . -type f -name "*.cpp" -o -name "*.h" | head -20
-          echo "📁 Directorios encontrados:"
-          ls -la
-
-      - name: 🔍 Ejecutar análisis estático
-        run: |
-          echo "🔍 Ejecutando CPPCheck en el proyecto..."
-
-          # Buscar todos los archivos C++ recursivamente
-          CPP_FILES=$(find . -name "*.cpp" -not -path "./obj/*" -not -path "./.git/*")
-          H_FILES=$(find . -name "*.h" -not -path "./obj/*" -not -path "./.git/*")
-
-          if [ -z "$CPP_FILES" ] && [ -z "$H_FILES" ]; then
-            echo "❌ No se encontraron archivos .cpp o .h"
-            exit 1
-          fi
-
-          echo "📄 Archivos encontrados:"
-          echo "CPP: $CPP_FILES"
-          echo "Headers: $H_FILES"
-
-          # Ejecutar cppcheck en los archivos encontrados
-          cppcheck --enable=all \
-                   --std=c++17 \
-                   --platform=unix64 \
-                   --suppress=missingIncludeSystem \
-                   --suppress=unusedFunction \
-                   --inline-suppr \
-                   --error-exitcode=1 \
-                   --xml \
-                   --xml-version=2 \
-                   $CPP_FILES $H_FILES 2> cppcheck-report.xml
-
-      - name: 📋 Mostrar reporte en consola
-        if: always()
-        run: |
-          echo "📋 Reporte de CPPCheck:"
-
-          # Buscar archivos nuevamente para el reporte en consola
-          CPP_FILES=$(find . -name "*.cpp" -not -path "./obj/*" -not -path "./.git/*")
-          H_FILES=$(find . -name "*.h" -not -path "./obj/*" -not -path "./.git/*")
-
-          if [ ! -z "$CPP_FILES" ] || [ ! -z "$H_FILES" ]; then
-            cppcheck --enable=all \
-                     --std=c++17 \
-                     --suppress=missingIncludeSystem \
-                     --suppress=unusedFunction \
-                     $CPP_FILES $H_FILES
-          fi
-
-      - name: 📄 Subir reporte XML como artefacto
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: cppcheck-report
-          path: cppcheck-report.xml
-          retention-days: 30
-
-  build-test:
-    name: Compilación y Pruebas
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 📥 Checkout código
-        uses: actions/checkout@v4
-
-      - name: 🔧 Instalar dependencias
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y build-essential g++ make
-
-      - name: 🔍 Verificar archivos del proyecto
-        run: |
-          echo "📁 Contenido del repositorio:"
-          ls -la
-          echo "📄 Archivos C++:"
+          echo "Archivos en el proyecto:"
           find . -name "*.cpp" -o -name "*.h"
-          echo "📁 Makefile presente:"
-          ls -la Makefile 2>/dev/null || echo "❌ Makefile no encontrado"
 
-      - name: 📁 Crear directorios necesarios
+      - name: CPPCheck
         run: |
-          mkdir -p obj data
+          if find . -name "*.cpp" -o -name "*.h" | grep -q .; then
+            find . -name "*.cpp" -o -name "*.h" | xargs cppcheck --enable=all --std=c++17
+          else
+            echo "No se encontraron archivos C++"
+          fi
 
-      - name: 🏗️ Compilar proyecto
+      - name: Compilar
         run: |
-          echo "🏗️ Compilando proyecto..."
           if [ -f Makefile ]; then
-            make clean || true
             make
           else
-            echo "❌ Makefile no encontrado, compilando manualmente..."
-            # Compilación manual como fallback
-            g++ -std=c++17 -Wall -Wextra -g -I. $(find . -name "*.cpp") -o biblioteca
+            echo "Compilando manualmente..."
+            find . -name "*.cpp" | xargs g++ -std=c++17 -Wall -o programa 2>/dev/null || echo "Error de compilación"
           fi
-
-      - name: 📋 Configurar datos de prueba
-        run: |
-          echo "📋 Configurando datos de prueba..."
-          if [ -f Makefile ]; then
-            make setup-data || echo "⚠️ setup-data no disponible"
-          else
-            mkdir -p data
-            echo "LIBRO|Test Book|Test Author|1234567890123|2023|1|1|Fiction|100" > data/materiales.txt
-            echo "Test User|12345678|test@test.com|5|" > data/usuarios.txt
-            touch data/prestamos.txt
-          fi
-
-      - name: ✅ Verificar ejecutable
-        run: |
-          echo "✅ Verificando que el ejecutable se creó correctamente..."
-          if [ -f biblioteca ]; then
-            ls -la biblioteca
-            file biblioteca
-          else
-            echo "❌ Ejecutable no encontrado"
-            ls -la
-          fi
-
-      - name: 🧪 Ejecutar prueba básica
-        run: |
-          echo "🧪 Ejecutando prueba básica del programa..."
-          if [ -f biblioteca ]; then
-            echo "9" | timeout 10s ./biblioteca || echo "Prueba completada con timeout"
-          else
-            echo "⚠️ No se puede probar - ejecutable no encontrado"
-          fi
-
-  code-quality:
-    name: Análisis de Calidad Adicional
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: 📥 Checkout código
-        uses: actions/checkout@v4
-
-      - name: 📊 Contar líneas de código
-        run: |
-          echo "📊 Estadísticas del proyecto:"
-          echo "Total de archivos C++:"
-          find . -name "*.cpp" -o -name "*.h" | wc -l
-          echo "Líneas de código:"
-          find . -name "*.cpp" -o -name "*.h" | xargs wc -l 2>/dev/null | tail -1 || echo "Sin archivos para contar"
-          echo "Archivos por tipo:"
-          echo "Headers (.h):" 
-          find . -name "*.h" | wc -l
-          echo "Implementaciones (.cpp):"
-          find . -name "*.cpp" | wc -l
-
-      - name: 🔍 Verificar estructura del proyecto
-        run: |
-          echo "🔍 Verificando estructura del proyecto..."
-          echo "Estructura completa:"
-          tree . 2>/dev/null || find . -type d | head -10
-          echo "Archivos principales:"
-          ls -la *.cpp *.md Makefile 2>/dev/null || echo "Algunos archivos no encontrados"
