@@ -1,3 +1,19 @@
+## Clases
+
+![](./image2.png)
+
+## Flujo en archivos
+
+![](./image.png)
+
+## Persistencia de datos
+
+![](./image3.png)
+
+## Operaciones
+
+![](image-1.png)
+
 ## Como ejecutar
 
 1. hacemos make ( compila todo)

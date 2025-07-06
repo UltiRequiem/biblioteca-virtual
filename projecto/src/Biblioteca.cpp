@@ -169,7 +169,6 @@ bool Biblioteca::agregarMaterial(MaterialBibliografico *material)
 
   materiales[totalMateriales++] = material;
 
-  // Solo guardar si no estamos cargando datos desde archivo
   if (!cargandoDatos)
   {
     guardarDatos();
@@ -284,7 +283,6 @@ bool Biblioteca::agregarUsuario(Usuario *usuario)
 
   usuarios[totalUsuarios++] = usuario;
 
-  // Solo guardar si no estamos cargando datos desde archivo
   if (!cargandoDatos)
   {
     guardarDatos();
@@ -387,7 +385,6 @@ bool Biblioteca::prestarLibro(const string &dni, const string &isbn)
     prestamos[totalPrestamos++] = new Prestamo(dni, isbn);
     cout << "Préstamo realizado exitosamente." << endl;
 
-    // Solo guardar si no estamos cargando datos desde archivo
     if (!cargandoDatos)
     {
       guardarDatos();
@@ -429,7 +426,6 @@ bool Biblioteca::devolverLibro(const string &dni, const string &isbn)
 
       cout << "Devolución realizada exitosamente." << endl;
 
-      // Solo guardar si no estamos cargando datos desde archivo
       if (!cargandoDatos)
       {
         guardarDatos();
@@ -532,15 +528,14 @@ bool Biblioteca::validarDNI(const string &dni) const
 
 bool Biblioteca::cargarDatos()
 {
-  cargandoDatos = true; // Activar flag para evitar guardar durante carga
-  
+  cargandoDatos = true;
   bool success = true;
   success &= cargarMateriales();
   success &= cargarUsuarios();
   success &= cargarPrestamos();
-  
-  cargandoDatos = false; // Desactivar flag después de cargar
-  
+
+  cargandoDatos = false;
+
   return success;
 }
 
