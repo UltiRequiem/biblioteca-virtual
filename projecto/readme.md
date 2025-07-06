@@ -1,3 +1,19 @@
+## Como ejecutar
+
+1. hacemos make ( compila todo)
+
+```sh
+make
+```
+
+Otra alternativa:
+
+```sh
+make run
+```
+
+Esto compila y ejecuta el programa.
+
 El delegado dijo que espere a que actualize el repositorio y que me saldria las
 instruciones del repositorio, pero ya pasaron algunos dis y todavia no sale.
 cppcheck lo podemos instalar en mac usando brew:
