@@ -251,3 +251,6 @@ Luego
 ```sh
 cppcheck .
 ```
+
+Resultado:
+![alt text](image.png)

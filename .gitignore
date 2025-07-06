@@ -1,3 +1,8 @@
 */bin/
 projecto/obj
 projecto/biblioteca
+
+cppcheck-report.xml
+cppcheck-report.txt
+
+.github/workflows/*.log
