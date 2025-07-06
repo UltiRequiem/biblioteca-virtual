@@ -1,16 +1,24 @@
-## Clases
+# Mi biblioteca
+
+Projecto Final para el curso de Fundamentos de Programación con C++.
+
+## Diagramas
+
+Diagramas utiles para explicar
+
+### Clases
 
 ![](./image2.png)
 
-## Flujo en archivos
+### Flujo en archivos
 
 ![](./image.png)
 
-## Persistencia de datos
+### Persistencia de datos
 
 ![](./image3.png)
 
-## Operaciones
+### Operaciones
 
 ![](image-1.png)
 
