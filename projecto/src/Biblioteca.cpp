@@ -13,7 +13,7 @@ Biblioteca::Biblioteca(const string &archivoMateriales,
                        const string &archivoUsuarios,
                        const string &archivoPrestamos)
     : archivoMateriales(archivoMateriales), archivoUsuarios(archivoUsuarios),
-      archivoPrestamos(archivoPrestamos)
+      archivoPrestamos(archivoPrestamos), cargandoDatos(false)
 {
 
   capacidadMateriales = 10;
@@ -33,6 +33,8 @@ Biblioteca::Biblioteca(const string &archivoMateriales,
 
 Biblioteca::~Biblioteca()
 {
+  guardarDatos();
+
   for (int i = 0; i < totalMateriales; i++)
   {
     delete materiales[i];
@@ -166,6 +168,13 @@ bool Biblioteca::agregarMaterial(MaterialBibliografico *material)
   }
 
   materiales[totalMateriales++] = material;
+
+  // Solo guardar si no estamos cargando datos desde archivo
+  if (!cargandoDatos)
+  {
+    guardarDatos();
+  }
+
   return true;
 }
 
@@ -274,6 +283,13 @@ bool Biblioteca::agregarUsuario(Usuario *usuario)
   }
 
   usuarios[totalUsuarios++] = usuario;
+
+  // Solo guardar si no estamos cargando datos desde archivo
+  if (!cargandoDatos)
+  {
+    guardarDatos();
+  }
+
   return true;
 }
 
@@ -370,6 +386,13 @@ bool Biblioteca::prestarLibro(const string &dni, const string &isbn)
 
     prestamos[totalPrestamos++] = new Prestamo(dni, isbn);
     cout << "Préstamo realizado exitosamente." << endl;
+
+    // Solo guardar si no estamos cargando datos desde archivo
+    if (!cargandoDatos)
+    {
+      guardarDatos();
+    }
+
     return true;
   }
 
@@ -405,6 +428,13 @@ bool Biblioteca::devolverLibro(const string &dni, const string &isbn)
       material->devolverCopia();
 
       cout << "Devolución realizada exitosamente." << endl;
+
+      // Solo guardar si no estamos cargando datos desde archivo
+      if (!cargandoDatos)
+      {
+        guardarDatos();
+      }
+
       return true;
     }
   }
@@ -502,10 +532,15 @@ bool Biblioteca::validarDNI(const string &dni) const
 
 bool Biblioteca::cargarDatos()
 {
+  cargandoDatos = true; // Activar flag para evitar guardar durante carga
+  
   bool success = true;
   success &= cargarMateriales();
   success &= cargarUsuarios();
   success &= cargarPrestamos();
+  
+  cargandoDatos = false; // Desactivar flag después de cargar
+  
   return success;
 }
 
