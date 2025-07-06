@@ -61,7 +61,7 @@ void Prestamo::mostrarInformacion() const
     cout << "Días prestado: " << diasPrestado() << endl;
     if (estaVencido())
     {
-      cout << "⚠️  PRÉSTAMO VENCIDO" << endl;
+      cout << "PRÉSTAMO VENCIDO!!" << endl;
     }
   }
   else

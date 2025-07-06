@@ -26,8 +26,8 @@ private:
   string archivoMateriales;
   string archivoUsuarios;
   string archivoPrestamos;
-  
-  bool cargandoDatos; // Flag para evitar guardar durante la carga
+
+  bool cargandoDatos;
 
   MaterialBibliografico *buscarMaterialPorISBN(const string &isbn);
   Usuario *buscarUsuarioPorDNI(const string &dni);
