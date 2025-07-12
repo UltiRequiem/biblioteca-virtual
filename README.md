@@ -1,3 +1,9 @@
+# Repositorio con todos mis trabajos de la carrera:
+
+https://github.com/UltiRequiem/uni-cs-pe
+
+Cualquier cambio o actualizacion se realizara ahi.
+
 # Mi biblioteca
 
 Proyecto Final para el curso de Fundamentos de Programación con C++.
